@@ -1,6 +1,9 @@
 package com.example.handler;
 
+import java.time.LocalDate;
+
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.connector.elasticsearch.sink.ElasticsearchSink;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
@@ -12,12 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.config.ElasticsearchConfig;
 import com.example.config.KafkaAdminConfig;
 import com.example.config.KafkaConfig;
 import com.example.config.KafkaJsonModelSchema;
 import com.example.config.KafkaSinkRecordModelSchema;
 import com.example.filter.DemoFilter;
+import com.example.map.ElasticsearchMapFunction;
 import com.example.model.Demo;
+import com.example.model.ElasticsearchSinkModel;
 import com.example.until.CommonUtils;
 
 @Component
@@ -32,6 +38,9 @@ public class DemoJobHandler {
 
     @Autowired
     private KafkaAdminConfig kafkaAdminConfig;
+
+    @Autowired
+    private ElasticsearchConfig eConfig;
 
     public DemoJobHandler(RestHighLevelClient elasticsearchClient) {
         this.elasticsearchClient = elasticsearchClient;
@@ -58,6 +67,13 @@ public class DemoJobHandler {
 
         DataStream<Demo> filterStream = inputStream.filter(new DemoFilter());
 
+        DataStream<ElasticsearchSinkModel<Demo>> mapFunctionToEs = filterStream.map(new ElasticsearchMapFunction<Demo, ElasticsearchSinkModel<Demo>>(
+            "demo", 
+            LocalDate.now().toString(),
+            "id",
+            "age"
+        ));
+
         // Sink to Kafka
         KafkaSink<Demo> sinkKafka = kafkaConfig
             .createKafkaSink(new KafkaSinkRecordModelSchema<Demo>(
@@ -66,7 +82,10 @@ public class DemoJobHandler {
                 e -> e
             ));
 
+        ElasticsearchSink<ElasticsearchSinkModel<Demo>> sinkToElastic = eConfig.elasticsearchSink();
+
         filterStream.sinkTo(sinkKafka);
+        mapFunctionToEs.sinkTo(sinkToElastic);
 
         try {
             env.execute("Demo");
@@ -78,7 +97,7 @@ public class DemoJobHandler {
     private static StreamExecutionEnvironment getExecutionEnvironment() {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
-        // env.enableCheckpointing(1000);
+        env.enableCheckpointing(1000);
         return env;
     }
 }

@@ -17,34 +17,37 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import com.example.model.OcbElasticsearchSinkModel;
+import com.example.model.ElasticsearchSinkModel;
 import com.example.until.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Configuration
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+@NoArgsConstructor
 public class ElasticsearchConfig {
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchConfig.class);
 
     @Value("${elasticsearch.host}")
-    private  String host;
+    public String host;
     
     @Value("${elasticsearch.port}")
-    private  String port;
+    public String port;
 
     @Value("${elasticsearch.schema}")
-    private  String schema;
+    public String schema;
 
     @Value("${elasticsearch.username}")
-    private  String username;
+    public String username;
 
     @Value("${elasticsearch.password}")
-    private  String password;
+    public String password;
     
-    @Bean
     public RestHighLevelClient restHighLevelClient() {
         final BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
@@ -63,7 +66,7 @@ public class ElasticsearchConfig {
             : String.format("%s-%s", indexName, indexDate);
     }
     
-    private static <T> IndexRequest createIndexRequest(OcbElasticsearchSinkModel<T> element) {
+    private static <T> IndexRequest createIndexRequest(ElasticsearchSinkModel<T> element) {
         try {
             String json = JsonUtils.mapToString(element.getData());
             Map<String, Object> jsonMap = new ObjectMapper().readValue(json, new TypeReference<Map<String, Object>>() {});
@@ -78,19 +81,16 @@ public class ElasticsearchConfig {
         }
     }
 
-    @Bean
-    public <T> ElasticsearchSink<OcbElasticsearchSinkModel<T>> elasticsearchSink() {
+    public <T> ElasticsearchSink<ElasticsearchSinkModel<T>> elasticsearchSink() {
         HttpHost httpHost = new HttpHost(host, NumberUtils.toInt(port), schema);
 
-        return new Elasticsearch7SinkBuilder<OcbElasticsearchSinkModel<T>>()
+        return new Elasticsearch7SinkBuilder<ElasticsearchSinkModel<T>>()
             .setHosts(httpHost)
-            .setEmitter((element, context, indexer) -> {
-                try {
-                    indexer.add(createIndexRequest(element));
-                } catch (Exception e) {
-                    logger.error("Failed to emit data to Elasticsearch for element: {}", element, e);
-                }
-            })
+            .setEmitter(
+            (element, context, indexer) ->
+            indexer.add(createIndexRequest(element)))
+            .setBulkFlushMaxActions(NumberUtils.toInt("500"))
+            .setBulkFlushInterval(NumberUtils.toLong("1000"))
             .setBulkFlushBackoffStrategy(FlushBackoffType.EXPONENTIAL, 5, 1000)
             .setConnectionUsername(username)
             .setConnectionPassword(password)

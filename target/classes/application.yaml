@@ -12,7 +12,7 @@ producer:
   linger-ms: ${KAFKA_PRODUCER_LINGER_MS:1000}
 elasticsearch:
     host: ${DS_ELASTIC_HOST:localhost}
-    port: ${DS_ELASTIC_PORT:9200}
+    port: ${DS_ELASTIC_PORT:9201}
     schema: ${DS_ELASTIC_SSL:http}
     username: ${DS_ELASTIC_USER:elastic}
     password: ${DS_ELASTIC_PASSWORD:elastic}

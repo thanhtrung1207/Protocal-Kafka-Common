@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Demo {
 
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("age")
     private String age;
 
