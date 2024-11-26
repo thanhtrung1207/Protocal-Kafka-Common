@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OcbElasticsearchSinkModel<T> {
+public class ElasticsearchSinkModel<T> {
     
     public String indexName;
 
