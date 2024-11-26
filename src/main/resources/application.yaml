@@ -1,0 +1,23 @@
+topic:
+  input: ${KAFKA_TOPIC_INPUT:input}
+  output: ${KAFKA_TOPIC_OUTPUT:output}
+consumer:
+  bootstrap-server: ${KAFKA_CONSUMER_BOOTSTRAP_SERVER:localhost:9092}
+  partition-discovery-interval-ms: ${KAFKA_CONSUMER_INTERVAL_MS:3600000}
+  group-id: ${KAFKA_REPLICA_CONSUMER_GROUP_ID:flink-consumer-group3}
+producer:
+  bootstrap-server: ${KAFKA_PRODUCER_BOOTSTRAP_SERVER:localhost:9092}
+  acks: ${KAFKA_PRODUCER_ACKS:1}
+  batch-size: ${KAFKA_PRODUCER_BATCH_SIZE:200}
+  linger-ms: ${KAFKA_PRODUCER_LINGER_MS:1000}
+elasticsearch:
+    host: ${DS_ELASTIC_HOST:localhost}
+    port: ${DS_ELASTIC_PORT:9200}
+    schema: ${DS_ELASTIC_SSL:http}
+    username: ${DS_ELASTIC_USER:elastic}
+    password: ${DS_ELASTIC_PASSWORD:elastic}
+    retries: ${DS_ELASTIC_RETRIES:5}
+    delayMilis: ${DS_ELASTIC_DELAY_MILIS:1000}
+    bulkFlushMaxAction: ${DS_ELASTIC_BULK_FLUSH_MAX_ACTION:500}
+    bulkFlushIntervalMs: ${DS_ELASTIC_BULK_FLUSH_INTERVAL_MILIS:1000}
+    timezone: ${DS_ELASTIC_TIMEZONE:Asia/Ho_Chi_Minh}
