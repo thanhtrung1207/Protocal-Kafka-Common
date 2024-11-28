@@ -1,6 +1,6 @@
 topic:
-  input: ${KAFKA_TOPIC_INPUT:input}
-  output: ${KAFKA_TOPIC_OUTPUT:output}
+  input: ${KAFKA_TOPIC_INPUT:wordcount-input}
+  output: ${KAFKA_TOPIC_OUTPUT:wordcount-output}
 consumer:
   bootstrap-server: ${KAFKA_CONSUMER_BOOTSTRAP_SERVER:localhost:9092}
   partition-discovery-interval-ms: ${KAFKA_CONSUMER_INTERVAL_MS:3600000}
@@ -12,7 +12,7 @@ producer:
   linger-ms: ${KAFKA_PRODUCER_LINGER_MS:1000}
 elasticsearch:
     host: ${DS_ELASTIC_HOST:localhost}
-    port: ${DS_ELASTIC_PORT:9201}
+    port: ${DS_ELASTIC_PORT:9200}
     schema: ${DS_ELASTIC_SSL:http}
     username: ${DS_ELASTIC_USER:elastic}
     password: ${DS_ELASTIC_PASSWORD:elastic}
@@ -21,3 +21,13 @@ elasticsearch:
     bulkFlushMaxAction: ${DS_ELASTIC_BULK_FLUSH_MAX_ACTION:500}
     bulkFlushIntervalMs: ${DS_ELASTIC_BULK_FLUSH_INTERVAL_MILIS:1000}
     timezone: ${DS_ELASTIC_TIMEZONE:Asia/Ho_Chi_Minh}
+flinkjobs:
+  enabledJobs: demoJob,demo1
+logging:
+  level:
+    com.example.service: INFO
+
+
+
+
+

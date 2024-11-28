@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 public class KafkaTopics {
     
     @Value("topic.input")
-    private String inputTopic;
+    public static String inputTopic;
 
     @Value("topic.output")
-    private String outputTopic;
+    public static String outputTopic;
 }

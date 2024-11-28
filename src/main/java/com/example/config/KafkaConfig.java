@@ -8,10 +8,10 @@ import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.NoArgsConstructor;
 
-@Slf4j
 @Component
+@NoArgsConstructor
 public class KafkaConfig {
 
     @Value("${consumer.bootstrap-server}")

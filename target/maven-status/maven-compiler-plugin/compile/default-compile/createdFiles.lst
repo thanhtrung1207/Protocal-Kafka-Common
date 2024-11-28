@@ -1,8 +1,11 @@
 com/example/handler/DemoJobHandler.class
+com/example/config/FlinkJobConfig.class
+com/example/handler/Demo1JobHandler.class
 com/example/config/KafkaAdminConfig.class
 com/example/filter/DemoFilter.class
 com/example/config/interfaces/StorageStrategy.class
 com/example/model/Demo.class
+com/example/factory/FlinkJobFactory.class
 com/example/config/ElasticsearchStorage.class
 com/example/Main.class
 com/example/model/ElasticsearchSinkModel$ElasticsearchSinkModelBuilder.class
@@ -20,5 +23,6 @@ com/example/model/ErrorRecord.class
 com/example/config/KafkaSinkRecordModelSchema.class
 com/example/model/Demo$DemoBuilder.class
 com/example/exception/FlexibleExceptionHandler.class
+com/example/handler/interfaces/FlinkJob.class
 com/example/config/KafkaConfig.class
 com/example/map/ElasticsearchMapFunction.class

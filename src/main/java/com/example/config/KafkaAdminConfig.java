@@ -12,29 +12,32 @@ import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.OffsetResetStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class KafkaAdminConfig {
-    private final KafkaConfig config;
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaAdminConfig.class);
+
+    @Autowired
+    private KafkaConfig kafkaConfig;
     public <T> KafkaSource<T> createKafkaSource(String topic, String clientIdPrefix, String consumerGroupId, DeserializationSchema<T> deserializer, OffsetsInitializer offset, boolean isMasterData){
         ensureTopicExists(topic);
         return createKafkaSourceBase(topic, clientIdPrefix, consumerGroupId, deserializer, offset, isMasterData);
     }
 
-    private <T> KafkaSource<T> createKafkaSourceBase(String topic, String clientIdPrefix, String consumerGroupId, DeserializationSchema<T> deserializer, OffsetsInitializer offset, boolean isMasterData) {
+    private  <T> KafkaSource<T> createKafkaSourceBase(String topic, String clientIdPrefix, String consumerGroupId, DeserializationSchema<T> deserializer, OffsetsInitializer offset, boolean isMasterData) {
         Properties kafkaConsumerProps = new Properties();
-        kafkaConsumerProps.setProperty("bootstrap.servers", config.CONSUME_BOOTSTRAP_SERVER);
-        kafkaConsumerProps.setProperty("partition.discovery.interval.ms", config.CONSUME_INTERVAL_MS);
+        kafkaConsumerProps.setProperty("bootstrap.servers", kafkaConfig.CONSUME_BOOTSTRAP_SERVER);
+        kafkaConsumerProps.setProperty("partition.discovery.interval.ms", kafkaConfig.CONSUME_INTERVAL_MS);
 
         return KafkaSource.<T>builder()
                     .setValueOnlyDeserializer(deserializer)
@@ -53,7 +56,7 @@ public class KafkaAdminConfig {
 
             if (!existingTopics.contains(topic)) {
                 logger.info("Topic '{}' does not exist. Creating it...", topic);
-                NewTopic newTopic = new NewTopic(topic, config.DEFAULT_PARTITIONS, config.DEFAULT_REPLICATION_FACTOR);
+                NewTopic newTopic = new NewTopic(topic, kafkaConfig.DEFAULT_PARTITIONS, kafkaConfig.DEFAULT_REPLICATION_FACTOR);
                 adminClient.createTopics(Collections.singleton(newTopic)).all().get();
                 logger.info("Topic '{}' has been created.", topic);
             } else {
@@ -67,7 +70,7 @@ public class KafkaAdminConfig {
 
     private AdminClient createAdminClient() {
         Properties adminProps = new Properties();
-        adminProps.setProperty("bootstrap.servers", config.CONSUME_BOOTSTRAP_SERVER);
+        adminProps.setProperty("bootstrap.servers", kafkaConfig.CONSUME_BOOTSTRAP_SERVER);
         return AdminClient.create(adminProps);
     }
 }
