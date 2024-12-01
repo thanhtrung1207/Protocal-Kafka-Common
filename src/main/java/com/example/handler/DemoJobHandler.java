@@ -72,7 +72,7 @@ public class DemoJobHandler implements FlinkJob {
         KafkaSink<Demo> sinkKafka = kafkaConfig
             .createKafkaSink(new KafkaSinkRecordModelSchema<Demo>(
                 "wordcount-output",
-                e -> e.getAge(),
+                e -> e.setId(),
                 e -> e
             ));
 
@@ -91,6 +91,8 @@ public class DemoJobHandler implements FlinkJob {
     private static StreamExecutionEnvironment getExecutionEnvironment() {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
+        env.getStateBackend();
+        // env.setStateBackend();
         env.enableCheckpointing(1000);
         return env;
     }
