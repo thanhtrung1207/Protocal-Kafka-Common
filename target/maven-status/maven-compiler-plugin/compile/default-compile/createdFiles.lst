@@ -7,6 +7,7 @@ com/example/config/interfaces/StorageStrategy.class
 com/example/model/Demo.class
 com/example/factory/FlinkJobFactory.class
 com/example/config/ElasticsearchStorage.class
+com/example/until/RedisDuplicator.class
 com/example/Main.class
 com/example/model/ElasticsearchSinkModel$ElasticsearchSinkModelBuilder.class
 com/example/config/ElasticsearchConfig.class
@@ -18,6 +19,7 @@ com/example/model/ErrorRecord$ErrorRecordBuilder.class
 com/example/config/KafkaJsonModelSchema.class
 com/example/until/CommonUtils.class
 com/example/config/ElasticsearchConfig$1.class
+com/example/until/Duplicator.class
 com/example/service/ElasticsearchHealthCheckService.class
 com/example/model/ErrorRecord.class
 com/example/config/KafkaSinkRecordModelSchema.class

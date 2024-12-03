@@ -26,7 +26,15 @@ flinkjobs:
 logging:
   level:
     com.example.service: INFO
-
+datasource:
+  redis:
+    host: ${REDIS_HOSTS:localhost}
+    port: ${REDIS_PORT:6379}
+    username: ${REDIS_USERNAME:redis}
+    password: ${REDIS_PASSWORD:[redis]}
+    key_prefix: ${REDIS_DEDUPE_KEY_PREFIX:DEMO}
+    nx_ttl_seconds: ${REDIS_DEDUPE_NX_TTL_SECONDS:3600}
+    command_timeout_seconds: ${REDIS_DEDUPE_COMMAND_TIMEOUT_SECONDS:2}
 
 
 

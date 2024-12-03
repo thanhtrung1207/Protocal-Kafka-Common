@@ -18,12 +18,14 @@ import com.example.config.KafkaConfig;
 import com.example.config.KafkaJsonModelSchema;
 import com.example.config.KafkaSinkRecordModelSchema;
 import com.example.config.KafkaTopics;
+import com.example.config.RedisConfig;
 import com.example.filter.DemoFilter;
 import com.example.handler.interfaces.FlinkJob;
 import com.example.map.ElasticsearchMapFunction;
 import com.example.model.Demo;
 import com.example.model.ElasticsearchSinkModel;
 import com.example.until.CommonUtils;
+import com.example.until.Duplicator;
 
 @Component("demo1")
 public class Demo1JobHandler implements FlinkJob {
@@ -39,6 +41,11 @@ public class Demo1JobHandler implements FlinkJob {
 
     @Autowired
     private ElasticsearchConfig eConfig;
+
+    // @Autowired
+    // private RedisConfig redisConfig;
+
+    // private transient  Duplicator deduplicator;
 
     @Override
     public void onStarted() {

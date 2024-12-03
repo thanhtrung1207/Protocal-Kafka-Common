@@ -17,6 +17,7 @@
         <flink.connector-kafka.version>3.0.1-1.18</flink.connector-kafka.version>
         <lombok.version>1.18.28</lombok.version>
         <mockito.version>5.14.1</mockito.version>
+        <lettuce.version>6.3.1.RELEASE</lettuce.version>
     </properties>
 
     <dependencies>
@@ -117,6 +118,11 @@
             <artifactId>flink-test-utils</artifactId>
             <version>${flink.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>${lettuce.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
