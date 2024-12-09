@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.model.Demo;
 import com.example.until.Duplicator;
+import com.example.until.RedisKeyUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,13 @@ public class DemoFilter extends AbstractRichFunction implements FilterFunction<D
             }
 
             id = value.getId();
-            if (!isDeduplicate(id)) {
+            if (value.getId() == null){
+                logger.warn("⚠️ ID null/empty");
+                return false;
+            }
+            
+            String dedupeKey = RedisKeyUtils.buildKey("DEMO",id);
+            if (!isDeduplicate(dedupeKey)) {
                 logger.info("🔥 ID {} is catch by another processing", id);
                 return false;
             }

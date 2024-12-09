@@ -10,6 +10,7 @@ com/example/factory/FlinkJobFactory.class
 com/example/config/ElasticsearchStorage.class
 com/example/Main.class
 com/example/model/ElasticsearchSinkModel$ElasticsearchSinkModelBuilder.class
+com/example/until/RedisKeyUtils.class
 com/example/config/ElasticsearchConfig.class
 com/example/until/JsonUtils.class
 com/example/until/RedisDeduplicator.class
