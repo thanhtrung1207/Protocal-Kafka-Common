@@ -2,6 +2,7 @@
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/KafkaTopics.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/KafkaSinkRecordModelSchema.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/until/JsonUtils.java
+/home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/until/RedisDeduplicator.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/service/ElasticsearchHealthCheckService.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/service/FlinkJobService.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/until/Duplicator.java
@@ -9,6 +10,7 @@
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/exception/FlexibleExceptionHandler.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/KafkaJsonModelSchema.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/factory/FlinkJobFactory.java
+/home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/RedisConfig.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/model/Demo.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/model/ErrorRecord.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/model/ElasticsearchSinkModel.java
@@ -18,7 +20,6 @@
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/interfaces/StorageStrategy.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/FlinkJobConfig.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/handler/interfaces/FlinkJob.java
-/home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/until/RedisDuplicator.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/filter/DemoFilter.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/config/KafkaAdminConfig.java
 /home/trungtt6/ocb/flink-recommendation-system/myproject/src/main/java/com/example/until/CommonUtils.java

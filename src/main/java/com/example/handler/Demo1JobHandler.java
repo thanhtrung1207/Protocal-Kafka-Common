@@ -18,20 +18,15 @@ import com.example.config.KafkaConfig;
 import com.example.config.KafkaJsonModelSchema;
 import com.example.config.KafkaSinkRecordModelSchema;
 import com.example.config.KafkaTopics;
-import com.example.config.RedisConfig;
 import com.example.filter.DemoFilter;
 import com.example.handler.interfaces.FlinkJob;
 import com.example.map.ElasticsearchMapFunction;
 import com.example.model.Demo;
 import com.example.model.ElasticsearchSinkModel;
 import com.example.until.CommonUtils;
-import com.example.until.Duplicator;
 
 @Component("demo1")
 public class Demo1JobHandler implements FlinkJob {
-
-    // private static final Logger logger =
-    // LoggerFactory.getLogger(DemoJobHandler.class);
 
     @Autowired
     private KafkaConfig kafkaConfig;
@@ -42,10 +37,8 @@ public class Demo1JobHandler implements FlinkJob {
     @Autowired
     private ElasticsearchConfig eConfig;
 
-    // @Autowired
-    // private RedisConfig redisConfig;
-
-    // private transient  Duplicator deduplicator;
+    @Autowired
+    private DemoFilter demoFilter; 
 
     @Override
     public void onStarted() {
@@ -70,7 +63,8 @@ public class Demo1JobHandler implements FlinkJob {
                 WatermarkStrategy.noWatermarks(),
                 String.format("Kafka-Source: %s", "wordcount-input1"));
 
-        DataStream<Demo> filterStream = inputStream.filter(new DemoFilter());
+        // Sử dụng demoFilter đã được inject
+        DataStream<Demo> filterStream = inputStream.filter(demoFilter);
 
         DataStream<ElasticsearchSinkModel<Demo>> mapFunctionToEs = filterStream
                 .map(new ElasticsearchMapFunction<Demo, ElasticsearchSinkModel<Demo>>(

@@ -4,14 +4,15 @@ com/example/handler/Demo1JobHandler.class
 com/example/config/KafkaAdminConfig.class
 com/example/filter/DemoFilter.class
 com/example/config/interfaces/StorageStrategy.class
+com/example/config/RedisConfig.class
 com/example/model/Demo.class
 com/example/factory/FlinkJobFactory.class
 com/example/config/ElasticsearchStorage.class
-com/example/until/RedisDuplicator.class
 com/example/Main.class
 com/example/model/ElasticsearchSinkModel$ElasticsearchSinkModelBuilder.class
 com/example/config/ElasticsearchConfig.class
 com/example/until/JsonUtils.class
+com/example/until/RedisDeduplicator.class
 com/example/config/KafkaTopics.class
 com/example/service/FlinkJobService.class
 com/example/model/ElasticsearchSinkModel.class
