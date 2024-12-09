@@ -1,7 +1,5 @@
 package com.example.filter;
 
-import java.time.Duration;
-
 import org.apache.flink.api.common.functions.AbstractRichFunction;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.configuration.Configuration;
@@ -10,10 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.config.RedisConfig;
 import com.example.model.Demo;
 import com.example.until.Duplicator;
-import com.example.until.RedisDeduplicator;
 
 import lombok.RequiredArgsConstructor;
 

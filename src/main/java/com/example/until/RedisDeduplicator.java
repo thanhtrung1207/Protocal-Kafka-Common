@@ -6,9 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.config.RedisConfig;
 
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.api.StatefulRedisConnection;
-import io.lettuce.core.api.sync.RedisCommands;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
