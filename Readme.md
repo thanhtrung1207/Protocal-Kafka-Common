@@ -31,7 +31,7 @@ kibana.yaml
 xpack.security.enabled: true
 xpack.ingestManager.fleet.tlsCheckDisabled: true
 xpack.encryptedSavedObjects.encryptionKey: "something_at_least_32_characters"
-elasticsearch.hosts: ["http://elasticsearch2:9200"]
+elasticsearch.hosts: ["http://elasticsearch:9200"]
 elasticsearch.username: elastic
 elasticsearch.password: elastic
 server.host: 0.0.0.0
