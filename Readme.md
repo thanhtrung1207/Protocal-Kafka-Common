@@ -23,13 +23,26 @@ services:
 
     
 <h3>Docker-compose Elastic</h3>
+  - Tạo folder kibana cùng cấp với docker-compose 
+    + Thêm file kibana.yaml vào folder kibana
+kibana.yaml
+
+```bash
+xpack.security.enabled: true
+xpack.ingestManager.fleet.tlsCheckDisabled: true
+xpack.encryptedSavedObjects.encryptionKey: "something_at_least_32_characters"
+elasticsearch.hosts: ["http://elasticsearch2:9200"]
+elasticsearch.username: elastic
+elasticsearch.password: elastic
+server.host: 0.0.0.0
+```
 
 ```bash
 version: "3"
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
-    container_name: elasticsearch2
+    container_name: elasticsearch
     environment:
       - xpack.monitoring.enabled=true
       - xpack.security.enabled=true
