@@ -14,7 +14,7 @@ public class RedisConfig implements Serializable {
     public String redisUri;
 
     @Value("${datasource.redis.port}")
-    public String port;
+    public int port;
 
     @Value("${datasource.redis.username}")
     public String username;

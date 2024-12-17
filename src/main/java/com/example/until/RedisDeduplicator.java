@@ -30,7 +30,7 @@ public class RedisDeduplicator implements Duplicator, Serializable {
 
     @Override
     public void open() {
-        jedisPool = new JedisPool();
+        jedisPool = new JedisPool(redisConfig.redisUri,redisConfig.port,redisConfig.username,redisConfig.password);
         log.info("✅ Redis Deduplicator initialized.");
     }
 
