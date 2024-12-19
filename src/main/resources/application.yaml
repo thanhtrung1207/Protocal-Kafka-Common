@@ -35,7 +35,8 @@ datasource:
     key_prefix: ${REDIS_DEDUPE_KEY_PREFIX:DEMO}
     nx_ttl_seconds: ${REDIS_DEDUPE_NX_TTL_SECONDS:100}
     command_timeout_seconds: ${REDIS_DEDUPE_COMMAND_TIMEOUT_SECONDS:2}
-
-
+healthcheck:
+  elastic_search_flag: false
+  timeout: 10
 
 

@@ -50,7 +50,7 @@
         <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
+                <version>1.18.30</version>
                 <scope>provided</scope>
         </dependency>
 
@@ -92,6 +92,12 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-base</artifactId>
             <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- SLF4J for logging -->

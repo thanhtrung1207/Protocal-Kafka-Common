@@ -1,11 +1,12 @@
 package com.example.service;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
+import com.example.config.ElasticsearchConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.config.FlinkJobConfig;
@@ -28,7 +29,19 @@ public class FlinkJobService {
     @Autowired
     private FlinkJobConfig jobConfig;
 
+    @Autowired
+    private ElasticsearchConfig elasticsearchConfig;
+    @Value("${healthcheck.timeout}")
+    private int CHECK_INTERVAL_SECONDS;
+
+    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
+
     public void startFlinkJob() {
+        ElasticsearchHealthCheckService elasticsearchHealthCheckService
+                = new ElasticsearchHealthCheckService(elasticsearchConfig.restHighLevelClient());
+        startHealthCheckForever(elasticsearchHealthCheckService);
+
         for (String jobName : jobConfig.getEnabledJobs()) {
             if (jobFactory.isJobRegistered(jobName)) {
                 executorService.submit(() -> executeJob(jobName));
@@ -36,6 +49,18 @@ public class FlinkJobService {
                 System.err.println("⚠️ Job is not defined: " + jobName);
             }
         }
+    }
+
+    private void startHealthCheckForever( ElasticsearchHealthCheckService elasticsearchHealthCheckService) {
+        scheduledExecutorService.scheduleWithFixedDelay(() -> {
+            try {
+                if(elasticsearchHealthCheckService.checkHealthElastisSearch()){
+                    logger.info("✅ Successfully check Elasticsearch health");
+                }
+            } catch (Exception e) {
+                logger.error("🔥 Error during Elasticsearch health check", e);
+            }
+        }, 0, CHECK_INTERVAL_SECONDS, TimeUnit.SECONDS); // Initial delay of 0, then repeat every CHECK_INTERVAL_SECONDS
     }
 
     private void executeJob(String jobName) {
